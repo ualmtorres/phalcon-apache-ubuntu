@@ -12,17 +12,19 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     # Install php 7.4
     php7.4 \
     libapache2-mod-php7.4 \
+    php7.4-dev \
     php7.4-mysql \
     php7.4-curl \
     nano \
     ca-certificates \
     locales \
     gnupg \
+    php-pear \
+    build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN curl -s "https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh" | /bin/bash
-
-RUN apt-get install -y php7.4-phalcon
+RUN pecl channel-update pecl.php.net
+RUN pecl install phalcon
 
 # Set locales
 RUN locale-gen en_US.UTF-8 en_GB.UTF-8 es_ES.UTF-8 
